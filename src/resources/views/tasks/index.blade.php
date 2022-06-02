@@ -22,8 +22,18 @@
                             class="">{{ $task->title }}</a>
                     </td>
                     <td>
-                        <a href="" class="btn btn-outline-primary btn-sm me-1">編集</a>
-                        <a href="" class="btn btn-outline-danger btn-sm me-1">削除</a>
+                        <div class="row">
+                            <div class="col">
+                                <a href="{{ route('tasks.edit', ['id' => $task->id]) }}"
+                                    class="btn btn-outline-primary btn-sm me-1">編集</a>
+                            </div>
+                            <div class="col">
+                                <form action="{{ route('tasks.delete', ['id' => $task->id]) }}" method="POST" name="">
+                                    @csrf
+                                    <button type="submit" class='btn btn-outline-danger btn-sm me-1'>削除</button>
+                                </form>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach

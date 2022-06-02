@@ -3,6 +3,11 @@
 @section('content')
     <h1 class="text-center">タスク追加</h1>
     <div class="container">
+        <div>
+            @foreach ($errors->all() as $error)
+              <p class="alert alert-danger">{{$error}}</p>
+            @endforeach
+        </div>
         <form action="{{ route('tasks.store') }}" method="POST" class="form">
             @csrf
             <div class="form-group mb-3">

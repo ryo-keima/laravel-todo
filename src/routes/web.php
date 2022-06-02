@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TasksController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 Route::get('/', [TasksController::class, 'index'])->name('tasks.index');
 
 Auth::routes();
@@ -24,4 +23,9 @@ Route::group(['prefix' => '', 'middleware' => 'auth'], function () {
     Route::get('/show/{id}', [TasksController::class, 'show'])->name('tasks.show');
     Route::get('/add', [TasksController::class, 'add'])->name('tasks.add');
     Route::post('/store', [TasksController::class, 'store'])->name('tasks.store');
+    Route::get('/edit/{id}', [TasksController::class, 'edit'])->name('tasks.edit');
+    Route::post('/update/{id}', [TasksController::class, 'update'])->name('tasks.update');
+    Route::post('tasks/delete/{id}', [TasksController::class, 'delete'])->name('tasks.delete');
 });
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
