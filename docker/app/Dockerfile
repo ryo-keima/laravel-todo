@@ -9,4 +9,6 @@ RUN apt-get update && \
 COPY ./docker/app/php.ini /usr/local/etc/php/php.ini
 COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
 
+RUN apt-get install -y nodejs npm && npm install n -g && n 16.15.1
+
 WORKDIR /app
