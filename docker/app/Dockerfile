@@ -7,6 +7,7 @@ RUN apt-get update && \
     docker-php-ext-install intl pdo_mysql zip bcmath
 
 COPY ./docker/app/php.ini /usr/local/etc/php/php.ini
+
 COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
 
 RUN apt-get install -y nodejs npm && npm install n -g && n 16.15.1
