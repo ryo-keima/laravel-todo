@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: laravel_todo_app
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    volumes:
+      - ./src/:/app
+  web:
+    container_name: laravel_todo_web
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    ports:
+      - 8081:80
+    depends_on:
+      - app
+    volumes:
+      - ./src/:/app
+  db: 
+    container_name: laravel_todo_db
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    ports:
+      - 13309:3306
+    environment:
+      MYSQL_DATABASE: todo_db
+      MYSQL_USER: todouser
+      MYSQL_PASSWORD: todopass
+      MYSQL_ROOT_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - mysql-volume:/var/lib/mysql
+
+volumes:
+  mysql-volume:
