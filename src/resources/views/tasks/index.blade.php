@@ -38,5 +38,15 @@
                 </tr>
             @endforeach
         </table>
+        {{-- <div class="row">
+            <div class="col-md-6 offset-md-3 py-2">
+                {{ $tasks->onEachSide(5)->links() }}
+            </div>
+        </div> --}}
+        <div class="">
+            {{ $tasks->onEachSide(5)->links() }}
+
+        </div>
+
     </div>
 @endsection

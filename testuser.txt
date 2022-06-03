@@ -1,3 +1,0 @@
-user: testuser
-email: test@example.com
-pass: testpass

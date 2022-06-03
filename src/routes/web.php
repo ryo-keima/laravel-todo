@@ -15,11 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', [TasksController::class, 'index'])->name('tasks.index');
-
 Auth::routes();
 Route::group(['prefix' => '', 'middleware' => 'auth'], function () {
+    Route::get('/', [TasksController::class, 'index'])->name('tasks.index');
     Route::get('/show/{id}', [TasksController::class, 'show'])->name('tasks.show');
     Route::get('/add', [TasksController::class, 'add'])->name('tasks.add');
     Route::post('/store', [TasksController::class, 'store'])->name('tasks.store');

@@ -2,25 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Http\Requests\TaskRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
     public function index()
     {
-        $tasks = Task::orderBy('updated_at', 'desc')->get();
+        $tasks = Task::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->orderBy('id', 'desc')->paginate(15);
         return view('tasks.index', compact('tasks'));
     }
 
     public function show($id)
     {
         $task = Task::find($id);
-        return view('tasks.show', compact('task'));
+        if ($task->user_id === Auth::id()){
+            return view('tasks.show', compact('task'));
+        }
+        abort(404);
     }
 
-    public function add()
+    public function add() 
     {
         return view('tasks.add');
     }
@@ -30,6 +33,7 @@ class TasksController extends Controller
         $result = Task::create([
             'title' => $request->title,
             'content' => $request->content,
+            'user_id' => Auth::id()
         ]);
         return redirect()->route('tasks.index');
     }
@@ -37,7 +41,10 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::find($id);
-        return view('tasks.edit', compact('task'));
+        if ($task->user_id === Auth::id()){
+            return view('tasks.edit', compact('task'));
+        }
+        abort(404);
     }
 
     public function update(TaskRequest $request, $id)
@@ -45,14 +52,14 @@ class TasksController extends Controller
         $task = Task::find($id);
         $task->fill([
             'title' => $request->title,
-            'content' => $request->content
+            'content' => $request->content,
         ])->save();
         return redirect()->route('tasks.index');
     }
 
     public function delete($id)
     {
-        $task = Task::destroy($id);
+        Task::destroy($id);
         return redirect()->route('tasks.index');
     }
 }
