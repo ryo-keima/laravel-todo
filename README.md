@@ -22,7 +22,7 @@ WebサーバーとしてNginx、データベースはMySQLを使用している�
 1. Dockerのセットアップ
 
 Docker Desktopのダウンロード & インストール
-https://www.docker.com/products/docker-desktop/
+<https://www.docker.com/products/docker-desktop/>
 
 2. プロジェクトのクローン
 
@@ -31,31 +31,38 @@ git clone https://github.com/ryo-keima/laravel-todo.git
 cd laravel-todo
 ```
 
-3. 起動
+3. .envファイルの作成
+
+`laravel-todo/src/.env.example`ファイルを`.env`にリネームする
+
+4. 起動
 
 ```shell
 docker-compose up --build
 ```
 
-4. マイグレート&ダミーデータの挿入
+5. セットアップ(パッケージのインストールとダミーデータの挿入)
 
+新たに端末を起動し、以下のコマンドを実行します。
 ```
+docker-compose exec app composer install
 docker-compose exec app php artisan migrate:fresh --seed
 ```
 
-5. ブラウザで表示
+6. ブラウザで表示
 
 ブラウザで下記URLにアクセスします。
 `http://127.0.0.1:8081/`
 
-6. ログイン
+7. ログイン
 
 下記アカウントでログインできます。
+
 ```shell
 Email: test@example.com
 Password: testpass
 ```
 
-7. サーバの停止
+8. サーバの停止
 
 「`Ctrl + C`」キーで停止します。
